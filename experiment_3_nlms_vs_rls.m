@@ -1,9 +1,4 @@
 % Experiment 3: NLMS versus RLS on speech.
-% Required data: h128.mat and female1_8k.wav
-% Put the required data beside this script or in a data subfolder.
-% Click Run to display figures and save figures plus numerical results in results/.
-% Requires MATLAB R2017b or newer, using base MATLAB functions.
-% Checked against Handout8_RLS, Eqs. (10)-(17), and Lecture 7 pre-windowing.
 
 clearvars;
 root = fileparts(mfilename('fullpath'));
@@ -30,9 +25,9 @@ epsilon = 1e-2 * mean(energy);
 [eNlms, wNlms, wevnNlms] = run_nlms(x, d, muNlms, epsilon, h);
 nlmsLabel = sprintf('NLMS, mu = %.2f', muNlms);
 
-% Handout 8 Eqs. (10)-(17) give ordinary RLS, equivalent to lambda = 1.
+% ordinary RLS, equivalent to lambda = 1.
 % With delta > 0 it solves regularized, pre-windowed least squares.
-% Zero samples before the recording match Lecture 7 pre-windowing.
+% Zero samples before the recording match
 lambda = 1.0;
 delta = 0.01;  % P(0) = I/delta
 fprintf('\nExperiment 3: NLMS versus RLS (RLS delta = %.5g)\n', delta);
@@ -104,7 +99,7 @@ d = d(:);
 assert(numel(x) == numel(d), 'Input and microphone lengths must match.');
 L = numel(h);
 w = zeros(L, 1);
-P = eye(L) / delta;  % Handout 8 Eq. (17)
+P = eye(L) / delta;  
 e = zeros(numel(x), 1);
 wevn = zeros(numel(x), 1);
 trueEnergy = sum(h.^2);
@@ -112,7 +107,7 @@ xPad = [zeros(L - 1, 1); x(:)];
 for n = 1:numel(x)
     u = xPad(n+L-1:-1:n);
     e(n) = d(n) - w.' * u;
-    % Handout 8 Eqs. (10), (14), (15), and (11), respectively.
+
     Pu = P * u;
     gain = Pu / (lambda + u.' * Pu);
     w = w + gain * e(n);
@@ -123,7 +118,7 @@ end
 end
 
 function [d, actualSnr] = noisy_microphone(x, h, snrDb)
-% Handout 6 system identification: microphone = echo + independent noise.
+% system identification: microphone = echo + independent noise.
 cleanEcho = filter(h, 1, x);
 noise = randn(size(cleanEcho));
 noise = noise - mean(noise);
