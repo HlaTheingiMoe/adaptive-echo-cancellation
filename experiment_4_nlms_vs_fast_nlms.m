@@ -1,12 +1,5 @@
 % Experiment 4: NLMS versus block FFT Fast-NLMS.
-% Required data: h1024.mat and long_speech.wav
-% Put the required data beside this script or in a data subfolder.
-% Click Run to display figures and save figures plus numerical results in results/.
-% Requires MATLAB R2017b or newer, using base MATLAB functions.
-% Checked against Handout9_FreqLMS, Eqs. (30)-(42), pages 56-61.
-% Complexity follows Handout 9, pages 68-69, divided by L samples per block.
-% The supplied recording permits 42 complete updates for Fast-NLMS.
-% Report finite-record learning and end-of-recording accuracy from the curves.
+
 
 clearvars;
 root = fileparts(mfilename('fullpath'));
@@ -22,7 +15,7 @@ h = load_echo_path(root, 'h1024.mat', 1024);
 assert(size(x, 2) == 1, 'Expected mono speech.');
 L = numel(h);
 
-% Adapt once per complete L-sample block, as in Handout 9.
+% Adapt once per complete L-sample block
 % Process any remaining audio with the last learned Fast-NLMS filter.
 % Both algorithms receive the entire recording, without repeated speech.
 nSamples = numel(x);
@@ -160,7 +153,7 @@ function [e, w, wevn] = run_fnlms(x, d, mu, lambda, epsilon, initialPower, h)
 x = x(:);
 d = d(:);
 assert(numel(x) == numel(d), 'Input and microphone lengths must match.');
-% Handout 9 uses M for the tap count; this code uses L = M.
+% M for the tap count; this code uses L = M.
 % Eqs. (30)-(35): overlap-save input, output, and zero-prefixed error.
 % Eqs. (39)-(42): per-bin normalization followed by a causal constraint.
 % epsilon is an explicit numerical regularizer for low-energy bins.
@@ -208,7 +201,7 @@ end
 end
 
 function [d, actualSnr] = noisy_microphone(x, h, snrDb)
-% Handout 6 system identification: microphone = echo + independent noise.
+% system identification: microphone = echo + independent noise.
 cleanEcho = filter(h, 1, x);
 noise = randn(size(cleanEcho));
 noise = noise - mean(noise);
