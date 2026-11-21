@@ -5,7 +5,7 @@ MATLAB implementations for four experiments:
 1. LMS with white-noise input and three step sizes
 2. LMS versus NLMS with speech input
 3. NLMS versus RLS with speech input
-4. NLMS versus Fast-NLMS with a 1024-tap echo path
+4. NLMS versus F-NLMS with a 1024-tap echo path
 
 ## How to run
 
