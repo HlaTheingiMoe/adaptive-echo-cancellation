@@ -1,9 +1,5 @@
 % Experiment 2: LMS versus NLMS on speech.
-% Required data: h128.mat and female1_8k.wav
-% Put the required data beside this script or in a data subfolder.
-% Click Run to display figures and save figures plus numerical results in results/.
-% Requires MATLAB R2017b or newer, using base MATLAB functions.
-% Checked against Handout9_FreqLMS, Eqs. (27)-(29).
+
 
 clearvars;
 root = fileparts(mfilename('fullpath'));
@@ -134,7 +130,7 @@ end
 end
 
 function [d, actualSnr] = noisy_microphone(x, h, snrDb)
-% Handout 6 system identification: microphone = echo + independent noise.
+% system identification: microphone = echo + independent noise.
 cleanEcho = filter(h, 1, x);
 noise = randn(size(cleanEcho));
 noise = noise - mean(noise);
